@@ -7,7 +7,7 @@ switch = False
 wins = 0
 
 # antall simuleringer som skal kjøres
-n = 100000
+n = 100
 
 
 # vi lager en funksjon som skal kjøres n-antall ganger:
@@ -24,28 +24,29 @@ def monty_hall():
     # vi fjerner vinnerdøra fra lista, slik at to dører uten gevinst gjenstår:
     doors.remove(correct_door)
 
-    # dersom deltakeren har valgt rett dør:
+    # dersom deltakeren opprinnelig har valgt rett dør:
     if choice == correct_door:
         
-        # deltakerens valg + en av dørene uten gevinst:
+        # vi står igjen med deltakerens valg + en av dørene uten gevinst:
         remaining_doors = [choice, random.choice(doors)]
 
         # bytt eller ikke bytt:
         if switch == True:
-            return 0 # ikke gevinst hvis man bytter
+            return 0 # ikke gevinst hvis man bytter dør
         if switch == False:
-            return 1 # premie hvis man ikke bytter
+            return 1 # gevinst hvis man ikke bytter dør
 
 
-    # dersom deltakeren opprinnelig har valgt feil dør:
+    # dersom deltakeren opprinnelig har valgt feil dør blir det motsatt om man bytter:
     if choice != correct_door:
 
+        # vi står igjen med deltakerens valg + døra med gevinsten
         remaining_doors = [choice, correct_door]
 
         if switch == True:
-            return 1
+            return 1 # gevinst dersom man bytter dør
         if switch == False:
-            return 0  
+            return 0 # ikke gevinst dersom man velger å ikke bytte dør
 
 
 # vi kjører funksjonen monty_hall() n-antall ganger:        
@@ -69,14 +70,12 @@ print("Gevinst / Forsøk: ", wins / n)
 
 
 
-# vi plotter data:
+# vi plotter data (forutsetter matplotlib):
 import matplotlib.pyplot as plt
 
 data = [wins, n - wins]
 plt.title("MONTY HALL-simulering \n n = " + str(n) + ", bytte dør = " + str(switch))
 plt.bar(["Gevinst", "Ikke gevinst"], data)
 plt.show()
-
-
 
 
